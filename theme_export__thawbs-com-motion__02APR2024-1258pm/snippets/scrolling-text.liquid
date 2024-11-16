@@ -1,0 +1,35 @@
+{% style %}
+  .scrolling-text--{{ section.id }} {
+    --move-speed: {{ section.settings.speed }}s;
+    background-color: white; /* Set your desired background color */
+    color: black; /* Set your desired text color */;
+    z-index: 100; /* Adjust the z-index value if needed */
+  }
+
+  .scrolling-text--{{ section.id }} .scrolling-text__inner {
+    /* Adjust the max-height value to ensure sufficient scrolling content */
+    max-height: 400px; /* Example value, adjust as needed */
+    overflow-y: auto; /* Add scrollbars if the content exceeds max-height */
+  }
+
+  .scrolling-text--{{ section.id }} span {
+    font-size: {{ section.settings.text_size }}px;
+    color: black; /* Set the text color to match the parent container */
+  }
+{% endstyle %}
+
+
+
+{% if section.settings.link != blank %}
+  <a href="{{ section.settings.link }}">
+{% endif %}
+<div class="scrolling-text scrolling-text--{{ section.id }}">
+  <div class="scrolling-text__inner scrolling-text__inner--{{ section.settings.direction }}" aria-hidden="true" tabindex="0" style="gap: {% if section.settings.text_spacing %}40px{% else %}10px{% endif %};">
+    {% for i in (1..35) %}
+      <span>{{ section.settings.text }}</span>
+    {% endfor %}
+  </div>
+</div>
+{% if section.settings.link != blank %}
+  </a>
+{% endif %}
