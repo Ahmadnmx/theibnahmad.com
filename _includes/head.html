@@ -1,32 +1,26 @@
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+---
+layout: default
+---
 
-  {% seo %}
+<div class="catalogue">
+  {% for post in site.posts %}
+    {% if post.sticky %}
+      {% include catalogue_item.html sticky='true' %}
+    {% endif %}
+  {% endfor %}
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  {% for post in paginator.posts %}
+    {% include catalogue_item.html %}
+  {% endfor %}
+</div>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ "/assets/favicon-32x32.png" | relative_url }}">
-  <link rel="icon" type="image/png" sizes="16x16" href="{{ "/assets/favicon-16x16.png" | relative_url }}">
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ "/assets/apple-touch-icon.png" | relative_url }}">
-
-  <!-- RSS -->
-  {% feed_meta %}
-
-  <!-- Google Analytics-->
-  {% if site.google_analytics and jekyll.environment == 'production' %}
-  {% include analytics.html %}
+<div class="pagination">
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
   {% endif %}
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-49WEE9CPV4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+  {% endif %}
 
-  gtag('config', 'G-49WEE9CPV4');
-</script>
-</head>
+  <span>{{ paginator.page }}</span>
+</div>
